@@ -1,0 +1,1157 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#493628">
+<meta name="description" content="مدرسة عكرمة POS - نظام نقاط بيع متطور لإدارة المبيعات والمخزون"><title>مدرسة عكرمة POS | نظام نقاط البيع</title>    
+    <!-- الخطوط -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Tajawal:wght@300;400;500;700;900&family=Amiri:wght@400;700&family=Cinzel:wght@500;700&display=swap" rel="stylesheet">
+    <!-- الأيقونات -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- الأنماط -->
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/scanner-styles.css">
+    <link rel="stylesheet" href="css/advanced-styles.css">
+    
+    <!-- Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Apple Touch Icon -->
+    <link rel="apple-touch-icon" href="assets/icon-192.png">
+</head>
+<body>
+    
+    <!-- شاشة التحميل -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-content">
+            <div class="loading-logo">
+                <i class="fas fa-cash-register"></i>
+            </div>
+            <div class="loading-spinner"></div>
+            <h2>مدرسة عكرمة POS</h2>
+            <p>جاري التحميل...</p>
+        </div>
+    </div>
+
+    <!-- الشريط العلوي -->
+    <nav class="navbar" id="navbar">
+        <div class="navbar-container">
+            <div class="navbar-brand">
+                <div class="brand-icon">
+                    <i class="fas fa-cash-register"></i>
+                </div>
+                <div class="brand-text">
+                    <h1 class="brand-title">مدرسة عكرمة POS</h1>
+                </div>
+            </div>
+
+<div class="navbar-menu-wrapper">
+    <button class="nav-scroll-btn right" id="scrollRight" title="تمرير لليمين">
+        <i class="fas fa-chevron-right"></i>
+    </button>
+    
+    <div class="navbar-menu" id="navbarMenu">
+        <button class="nav-item active" data-page="dashboard">
+            <i class="fas fa-chart-line"></i>
+            <span>لوحة التحكم</span>
+        </button>
+        <button class="nav-item" data-page="pos">
+            <i class="fas fa-shopping-cart"></i>
+            <span>نقطة البيع</span>
+        </button>
+        <button class="nav-item" data-page="products">
+            <i class="fas fa-boxes"></i>
+            <span>المنتجات</span>
+        </button>
+        <button class="nav-item" data-page="customers">
+            <i class="fas fa-users"></i>
+            <span>العملاء</span>
+        </button>
+        <button class="nav-item" data-page="sales">
+            <i class="fas fa-receipt"></i>
+            <span>المبيعات</span>
+        </button>
+        <button class="nav-item" data-page="reports">
+            <i class="fas fa-chart-pie"></i>
+            <span>التقارير</span>
+        </button>
+        <button class="nav-item" data-page="breakeven">
+            <i class="fas fa-balance-scale"></i>
+            <span>نقطة التعادل</span>
+        </button>
+    </div>
+
+    <button class="nav-scroll-btn left" id="scrollLeft" title="تمرير لليسار">
+        <i class="fas fa-chevron-left"></i>
+    </button>
+</div>
+
+            <div class="navbar-actions">
+                
+                <button class="navbar-btn" id="notificationsBtn" title="الإشعارات">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge">3</span>
+                </button>
+                <button class="navbar-btn" id="settingsBtn" title="الإعدادات">
+                    <i class="fas fa-cog"></i>
+                </button>
+
+
+                <button class="navbar-btn mobile-menu-toggle" id="mobileMenuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- المحتوى الرئيسي -->
+    <main class="main-content" id="mainContent">
+        <div class="container">
+            
+            <!-- صفحة لوحة التحكم -->
+            <div class="page active" id="dashboardPage">
+                <div class="page-header">
+                    <div class="page-title">
+                        <h2><i class="fas fa-chart-line"></i> لوحة التحكم</h2>
+                        <p>نظرة عامة على أداء النظام</p>
+                    </div>
+                    <div class="page-actions">
+                        <button class="btn btn-primary" id="refreshDashboard">
+                            <i class="fas fa-sync-alt"></i> تحديث
+                        </button>
+                    </div>
+                </div>
+
+                <!-- البطاقات الإحصائية -->
+                                <!-- البطاقات الإحصائية -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                        <div class="stat-details">
+                            <h3 class="stat-value" id="totalSalesValue">0</h3>
+                            <p class="stat-label">إجمالي المبيعات</p>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);">
+                            <i class="fas fa-receipt"></i>
+                        </div>
+                        <div class="stat-details">
+                            <h3 class="stat-value" id="totalOrdersValue">0</h3>
+                            <p class="stat-label">عدد الطلبات</p>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);">
+                            <i class="fas fa-boxes"></i>
+                        </div>
+                        <div class="stat-details">
+                            <h3 class="stat-value" id="totalProductsValue">0</h3>
+                            <p class="stat-label">إجمالي المنتجات</p>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-details">
+                            <h3 class="stat-value" id="totalCustomersValue">0</h3>
+                            <p class="stat-label">عدد العملاء</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- الرسوم البيانية -->
+                <div class="charts-section">
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <h3><i class="fas fa-chart-line"></i> المبيعات الشهرية</h3>
+                            <select class="chart-filter" id="salesChartFilter">
+                                <option value="6">آخر 6 أشهر</option>
+                                <option value="12" selected>آخر 12 شهر</option>
+                                <option value="24">آخر سنتين</option>
+                            </select>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="salesChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <h3><i class="fas fa-chart-pie"></i> المبيعات حسب الفئة</h3>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="categoryChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- أحدث المعاملات وأفضل المنتجات -->
+                <div class="dashboard-grid">
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-clock"></i> أحدث المعاملات</h3>
+                            <a href="#" class="view-all" data-page="sales">عرض الكل</a>
+                        </div>
+                        <div class="transactions-list" id="recentTransactions">
+                            <!-- سيتم ملؤها ديناميكيًا -->
+                        </div>
+                    </div>
+
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-star"></i> أفضل المنتجات مبيعًا</h3>
+                            <a href="#" class="view-all" data-page="products">عرض الكل</a>
+                        </div>
+                        <div class="top-products-list" id="topProducts">
+                            <!-- سيتم ملؤها ديناميكيًا -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- صفحة نقطة البيع -->
+            <div class="page" id="posPage">
+                <div class="pos-container">
+                    <div class="pos-products">
+<div class="pos-header">
+    <div class="search-with-barcode">
+        <div class="search-box flex-search">
+            <i class="fas fa-search"></i>
+            <input type="text" id="posSearch" placeholder="ابحث عن منتج بالاسم أو الباركود...">
+        </div>
+        <button class="btn btn-square" id="barcodeScanBtn" title="مسح باركود">
+            <i class="fas fa-barcode"></i>
+        </button>
+    </div>
+</div>
+
+                        <div class="categories-filter">
+                            <button class="category-btn active" data-category="all">
+                                <i class="fas fa-th"></i> الكل
+                            </button>
+                            <button class="category-btn" data-category="food">
+                                <i class="fas fa-utensils"></i> أطعمة
+                            </button>
+                            <button class="category-btn" data-category="drinks">
+                                <i class="fas fa-coffee"></i> مشروبات
+                            </button>
+                            <button class="category-btn" data-category="electronics">
+                                <i class="fas fa-laptop"></i> إلكترونيات
+                            </button>
+                            <button class="category-btn" data-category="stationery">
+                                <i class="fas fa-pen"></i> قرطاسية
+                            </button>
+                        </div>
+
+                        <div class="pos-products-grid" id="posProductsGrid">
+                            <!-- سيتم ملؤها ديناميكيًا -->
+                        </div>
+                    </div>
+
+                    <div class="pos-cart">
+                        <div class="cart-header">
+                            <h3><i class="fas fa-shopping-cart"></i> السلة</h3>
+                            <button class="btn-icon btn-clear-cart" id="clearCart" title="إفراغ السلة">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+
+                        <div class="customer-select">
+                            <label><i class="fas fa-user"></i> العميل:</label>
+                            <select id="customerSelect">
+                                <option value="">عميل عادي</option>
+                            </select>
+                        </div>
+
+                        <div class="cart-items" id="cartItems">
+                            <div class="empty-cart">
+                                <i class="fas fa-shopping-basket"></i>
+                                <p>السلة فارغة</p>
+                                <span>ابدأ بإضافة منتجات</span>
+                            </div>
+                        </div>
+                         
+                        <div class="cart-summary">
+                            <div class="summary-row">
+                                <span>المجموع الفرعي:</span>
+                                <span id="cartSubtotal">0.00 د.أ</span>
+                            </div>
+                            <div class="summary-row discount-row">
+                                <span>الخصم:</span>
+                                <div class="discount-input">
+                                    <input type="number" id="discountInput" value="0" min="0" max="100">
+                                    <span>%</span>
+                                </div>
+                            </div>
+                            <div class="summary-row">
+                                <span>الضريبة (16%):</span>
+                                <span id="cartTax">0.00 د.أ</span>
+                            </div>
+                            <div class="summary-row total-row">
+                                <span>الإجمالي:</span>
+                                <span id="cartTotal">0.00 د.أ</span>
+                            </div>
+                        </div>
+
+                        <div class="payment-methods">
+                            <button class="payment-btn active" data-method="cash">
+                                <i class="fas fa-money-bill-wave"></i>
+                                <span>نقدي</span>
+                            </button>
+                            <button class="payment-btn" data-method="card">
+                                <i class="fas fa-credit-card"></i>
+                                <span>بطاقة</span>
+                            </button>
+                            <button class="payment-btn" data-method="wallet">
+                                <i class="fas fa-wallet"></i>
+                                <span>محفظة</span>
+                            </button>
+                        </div>
+
+                        <button class="btn btn-primary btn-checkout" id="checkoutBtn" disabled>
+                            <i class="fas fa-check"></i> إتمام الدفع
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- صفحة المنتجات -->
+            <div class="page" id="productsPage">
+                <div class="page-header">
+                    <div class="page-title">
+                        <h2><i class="fas fa-boxes"></i> إدارة المنتجات</h2>
+                        <p>إضافة وتعديل المنتجات</p>
+                    </div>
+                    <div class="page-actions">
+                        <div class="view-toggle">
+                            <button class="view-btn active" data-view="grid">
+                                <i class="fas fa-th"></i>
+                            </button>
+                            <button class="view-btn" data-view="list">
+                                <i class="fas fa-list"></i>
+                            </button>
+                        </div>
+                        <button class="btn btn-primary" id="addProductBtn">
+                            <i class="fas fa-plus"></i> إضافة منتج
+                        </button>
+                    </div>
+                </div>
+
+                <div class="filters-bar">
+    <div class="search-box">
+        <i class="fas fa-search"></i>
+        <input type="text" id="productsSearch" placeholder="البحث في المنتجات...">
+    </div>
+    <select class="filter-select" id="categoryFilter">
+        <option value="all">جميع الفئات</option>
+        <option value="food">أطعمة</option>
+        <option value="drinks">مشروبات</option>
+        <option value="electronics">إلكترونيات</option>
+        <option value="stationery">قرطاسية</option>
+    </select>
+    <select class="filter-select" id="stockFilter">
+        <option value="all">جميع المنتجات</option>
+        <option value="instock">متوفر</option>
+        <option value="lowstock">مخزون منخفض</option>
+        <option value="outofstock">غير متوفر</option>
+    </select>
+    <button class="btn btn-secondary" id="manageCategoriesBtn">
+        <i class="fas fa-tags"></i> إدارة الفئات
+    </button>
+</div>
+
+
+                <div class="products-grid" id="productsGrid">
+                    <!-- سيتم ملؤها ديناميكيًا -->
+                </div>
+            </div>
+
+            <!-- صفحة العملاء -->
+            <div class="page" id="customersPage">
+                <div class="page-header">
+                    <div class="page-title">
+                        <h2><i class="fas fa-users"></i> إدارة العملاء</h2>
+                        <p>إضافة وتعديل بيانات العملاء</p>
+                    </div>
+                    <div class="page-actions">
+                        <button class="btn btn-primary" id="addCustomerBtn">
+                            <i class="fas fa-user-plus"></i> إضافة عميل
+                        </button>
+                    </div>
+                </div>
+
+                <div class="filters-bar">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="customersSearch" placeholder="البحث في العملاء...">
+                    </div>
+                </div>
+
+                <div class="customers-grid" id="customersGrid">
+                    <!-- سيتم ملؤها ديناميكيًا -->
+                </div>
+            </div>
+
+            <!-- صفحة المبيعات -->
+            <div class="page" id="salesPage">
+                <div class="page-header">
+                    <div class="page-title">
+                        <h2><i class="fas fa-receipt"></i> سجل المبيعات</h2>
+                        <p>عرض جميع عمليات البيع</p>
+                    </div>
+                    <div class="page-actions">
+                        <button class="btn btn-secondary" id="exportSales">
+                            <i class="fas fa-download"></i> تصدير
+                        </button>
+                    </div>
+                </div>
+
+                <div class="filters-bar">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="salesSearch" placeholder="البحث في المبيعات...">
+                    </div>
+                    <select class="filter-select" id="paymentMethodFilter">
+                        <option value="all">جميع طرق الدفع</option>
+                        <option value="cash">نقدي</option>
+                        <option value="card">بطاقة</option>
+                        <option value="wallet">محفظة</option>
+                    </select>
+                    <input type="date" class="filter-select" id="dateFilter">
+                </div>
+
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>رقم الفاتورة</th>
+                                <th>التاريخ</th>
+                                <th>العميل</th>
+                                <th>المنتجات</th>
+                                <th>طريقة الدفع</th>
+                                <th>المبلغ</th>
+                                <th>الإجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="salesTableBody">
+                            <!-- سيتم ملؤها ديناميكيًا -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- صفحة التقارير -->
+            <div class="page" id="reportsPage">
+                <div class="page-header">
+                    <div class="page-title">
+                        <h2><i class="fas fa-chart-pie"></i> التقارير والإحصائيات</h2>
+                        <p>تحليل شامل للأداء</p>
+                    </div>
+<div class="page-actions">
+    <select class="filter-select" id="reportPeriod">
+        <option value="week">هذا الأسبوع</option>
+        <option value="month" selected>هذا الشهر</option>
+        <option value="year">هذا العام</option>
+        <option value="all">كل الفترة</option>
+    </select>
+</div>
+                </div>
+
+                <div class="reports-grid">
+                    <div class="report-card">
+                        <div class="report-header">
+                            <h3><i class="fas fa-money-bill-trend-up"></i> الإيرادات</h3>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="revenueChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="report-card">
+                        <div class="report-header">
+                            <h3><i class="fas fa-box"></i> المخزون</h3>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="inventoryChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="report-card">
+                        <div class="report-header">
+                            <h3><i class="fas fa-chart-bar"></i> أداء الفئات</h3>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="categoryPerformanceChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="report-card">
+                        <div class="report-header">
+                            <h3><i class="fas fa-credit-card"></i> طرق الدفع</h3>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="paymentMethodsChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+<!-- صفحة نقطة التعادل -->
+<div class="page" id="breakevenPage">
+    <div class="page-header">
+        <div class="page-title">
+            <h2><i class="fas fa-balance-scale"></i> تحليل نقطة التعادل</h2>
+            <p>احسب نقطة التعادل وهامش الربح</p>
+        </div>
+        <div class="page-actions">
+            <button class="btn btn-secondary" id="exportBreakeven">
+                <i class="fas fa-download"></i> تصدير التقرير
+            </button>
+        </div>
+    </div>
+
+    <!-- نموذج الإدخال -->
+    <div class="breakeven-form-card">
+        <h3><i class="fas fa-calculator"></i> أدخل البيانات</h3>
+        <form id="breakevenForm">
+            <div class="form-row">
+                <div class="form-group">
+                    <label>التكاليف الثابتة (د.أ) *</label>
+                    <input type="number" id="fixedCosts" placeholder="مثال: 5000" min="0" step="0.01" required>
+                    <small>الإيجار، الرواتب، المصاريف الثابتة</small>
+                </div>
+                <div class="form-group">
+                    <label>سعر البيع للوحدة (د.أ) *</label>
+                    <input type="number" id="sellingPrice" placeholder="مثال: 50" min="0" step="0.01" required>
+                    <small>سعر بيع المنتج الواحد</small>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>التكلفة المتغيرة للوحدة (د.أ) *</label>
+                    <input type="number" id="variableCost" placeholder="مثال: 30" min="0" step="0.01" required>
+                    <small>تكلفة إنتاج/شراء المنتج الواحد</small>
+                </div>
+                <div class="form-group">
+                    <label>هدف الربح المطلوب (د.أ)</label>
+                    <input type="number" id="targetProfit" placeholder="اختياري" min="0" step="0.01">
+                    <small>الربح المستهدف (اختياري)</small>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-chart-line"></i> احسب نقطة التعادل
+            </button>
+        </form>
+    </div>
+
+    <!-- نتائج التحليل -->
+    <div id="breakevenResults" style="display: none;">
+        <!-- البطاقات الإحصائية -->
+        <div class="stats-grid">
+            <div class="stat-card breakeven-stat">
+                <div class="stat-icon" style="background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);">
+                    <i class="fas fa-equals"></i>
+                </div>
+                <div class="stat-details">
+                    <h3 class="stat-value" id="breakevenUnits">0</h3>
+                    <p class="stat-label">نقطة التعادل (وحدات)</p>
+                </div>
+            </div>
+
+            <div class="stat-card breakeven-stat">
+                <div class="stat-icon" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
+                    <i class="fas fa-dollar-sign"></i>
+                </div>
+                <div class="stat-details">
+                    <h3 class="stat-value" id="breakevenRevenue">0</h3>
+                    <p class="stat-label">نقطة التعادل (إيرادات)</p>
+                </div>
+            </div>
+
+            <div class="stat-card breakeven-stat">
+                <div class="stat-icon" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);">
+                    <i class="fas fa-percentage"></i>
+                </div>
+                <div class="stat-details">
+                    <h3 class="stat-value" id="contributionMargin">0%</h3>
+                    <p class="stat-label">هامش المساهمة</p>
+                </div>
+            </div>
+
+            <div class="stat-card breakeven-stat" id="targetProfitCard" style="display: none;">
+                <div class="stat-icon" style="background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);">
+                    <i class="fas fa-bullseye"></i>
+                </div>
+                <div class="stat-details">
+                    <h3 class="stat-value" id="targetUnits">0</h3>
+                    <p class="stat-label">الوحدات لتحقيق الهدف</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- الرسم البياني -->
+        <div class="chart-card">
+            <div class="chart-header">
+                <h3><i class="fas fa-chart-area"></i> رسم بياني لنقطة التعادل</h3>
+            </div>
+            <div class="chart-container" style="height: 400px;">
+                <canvas id="breakevenChart"></canvas>
+            </div>
+        </div>
+
+        <!-- جدول التحليل التفصيلي -->
+        <div class="table-container">
+            <h3 style="margin-bottom: 1rem;"><i class="fas fa-table"></i> التحليل التفصيلي</h3>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>الوحدات المباعة</th>
+                        <th>الإيرادات</th>
+                        <th>التكاليف الثابتة</th>
+                        <th>التكاليف المتغيرة</th>
+                        <th>إجمالي التكاليف</th>
+                        <th>الربح/الخسارة</th>
+                    </tr>
+                </thead>
+                <tbody id="breakevenTableBody"></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+        </div>
+    </main>
+
+    <!-- Modal مسح الباركود في POS -->
+    <div class="modal" id="barcodeScannerModal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h3><i class="fas fa-barcode"></i> مسح الباركود</h3>
+                <button class="modal-close" data-modal="barcodeScannerModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="barcodeScannerReader" style="width: 100%;"></div>
+                <div id="barcodeScannerStatus" style="text-align: center; padding: 1rem; font-weight: 600; color: var(--text-secondary);">
+                    جاري تهيئة الكاميرا...
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-modal="barcodeScannerModal">إغلاق</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal إضافة/تعديل منتج -->
+    <div class="modal" id="productModal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="productModalTitle"><i class="fas fa-box"></i> إضافة منتج</h3>
+                <button class="modal-close" data-modal="productModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form class="modal-body" id="productForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>اسم المنتج *</label>
+                        <input type="text" id="productName" required>
+                    </div>
+                    <div class="form-group">
+                        <label>الفئة *</label>
+                        <select id="productCategory" required>
+                            <option value="">اختر الفئة</option>
+                            <option value="food">أطعمة</option>
+                            <option value="drinks">مشروبات</option>
+                            <option value="electronics">إلكترونيات</option>
+                            <option value="stationery">قرطاسية</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>السعر (د.أ) *</label>
+                        <input type="number" id="productPrice" step="0.01" min="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label>الكمية في المخزون *</label>
+                        <input type="number" id="productStock" min="0" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>الباركود</label>
+                    <div class="barcode-input-group">
+                        <input type="text" id="productBarcode" placeholder="اتركه فارغًا للتوليد التلقائي">
+                        <button type="button" class="btn btn-secondary" id="generateBarcode" title="توليد باركود عشوائي">
+                            <i class="fas fa-barcode"></i> توليد
+                        </button>
+                        <button type="button" class="btn btn-success" id="scanProductBarcodeBtn" title="مسح باركود بالكاميرا">
+                            <i class="fas fa-camera"></i> مسح
+                        </button>
+                    </div>
+                </div>
+                <div class="form-row">
+                <div class="form-group">
+    <label><i class="fas fa-calendar-times"></i> تاريخ انتهاء الصلاحية *</label>
+    <input type="date" id="productExpiryDate" required>
+</div>
+                </div>
+                <div class="form-group">
+                    <label>الوصف</label>
+                    <textarea id="productDescription" rows="3"></textarea>
+                </div>
+                <input type="hidden" id="productId">
+
+            </form>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-modal="productModal">إلغاء</button>
+                <button type="submit" form="productForm" class="btn btn-primary" id="saveProductBtn">
+                    <i class="fas fa-save"></i> حفظ
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal مسح باركود المنتج -->
+    <div class="modal" id="productBarcodeScannerModal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h3><i class="fas fa-barcode"></i> مسح باركود المنتج</h3>
+                <button class="modal-close" data-modal="productBarcodeScannerModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="productBarcodeScannerReader" style="width: 100%;"></div>
+                <div id="productBarcodeScannerStatus" style="text-align: center; padding: 1rem; font-weight: 600; color: var(--text-secondary);">
+                    جاري تهيئة الكاميرا...
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-modal="productBarcodeScannerModal">إغلاق</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal إضافة/تعديل عميل -->
+    <div class="modal" id="customerModal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="customerModalTitle"><i class="fas fa-user"></i> إضافة عميل</h3>
+                <button class="modal-close" data-modal="customerModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form class="modal-body" id="customerForm">
+                <div class="form-group">
+                    <label>اسم العميل *</label>
+                    <input type="text" id="customerName" required>
+                </div>
+                <div class="form-group">
+                    <label>رقم الهاتف</label>
+                    <input type="tel" id="customerPhone">
+                </div>
+                <div class="form-group">
+                    <label>البريد الإلكتروني</label>
+                    <input type="email" id="customerEmail">
+                </div>
+                <div class="form-group">
+                    <label>العنوان</label>
+                    <textarea id="customerAddress" rows="2"></textarea>
+                </div>
+                <input type="hidden" id="customerId">
+            </form>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-modal="customerModal">إلغاء</button>
+                <button type="submit" form="customerForm" class="btn btn-primary" id="saveCustomerBtn">
+                    <i class="fas fa-save"></i> حفظ
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal تفاصيل الفاتورة -->
+    <div class="modal" id="invoiceModal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h3><i class="fas fa-file-invoice"></i> تفاصيل الفاتورة</h3>
+                <button class="modal-close" data-modal="invoiceModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="invoiceContent">
+                <!-- سيتم ملؤها ديناميكيًا -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-modal="invoiceModal">إغلاق</button>
+                <button type="button" class="btn btn-primary" id="printInvoice">
+                    <i class="fas fa-print"></i> طباعة
+                </button>
+            </div>
+        </div>
+    </div>
+<!-- Modal الإشعارات -->
+<div class="modal" id="notificationsModal">
+    <div class="modal-overlay"></div>
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3><i class="fas fa-bell"></i> الإشعارات</h3>
+            <button class="modal-close" data-modal="notificationsModal">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="modal-body" style="max-height: 500px; overflow-y: auto;">
+            <div id="notificationsList">
+                <!-- سيتم ملؤها ديناميكيًا -->
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-modal="notificationsModal">إغلاق</button>
+            <button type="button" class="btn btn-primary" id="markAllReadBtn">
+                <i class="fas fa-check-double"></i> تعليم الكل كمقروء
+            </button>
+        </div>
+    </div>
+</div>
+
+    <!-- Modal الإعدادات -->
+    <div class="modal" id="settingsModal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-cog"></i> الإعدادات</h3>
+                <button class="modal-close" data-modal="settingsModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="settings-section">
+                    <h4><i class="fas fa-store"></i> معلومات المتجر</h4>
+                    <div class="form-group">
+                        <label>اسم المتجر</label>
+                        <input type="text" id="storeName" value="مدرسة عكرمة POS">
+                    </div>
+                    <div class="form-group">
+                        <label>العملة</label>
+                        <input type="text" id="currency" value="د.أ">
+                    </div>
+                </div>
+                <div class="settings-section">
+                    <h4><i class="fas fa-percent"></i> الضرائب والخصومات</h4>
+                    <div class="form-group">
+                        <label>معدل الضريبة (%)</label>
+                        <input type="number" id="taxRate" value="16" min="0" max="100">
+                    </div>
+                </div>
+                <div class="settings-section">
+                    <h4><i class="fas fa-database"></i> إدارة البيانات</h4>
+                    <div class="settings-actions">
+                        <button class="btn btn-secondary" id="exportData">
+                            <i class="fas fa-download"></i> تصدير البيانات
+                        </button>
+                        <button class="btn btn-secondary" id="importData">
+                            <i class="fas fa-upload"></i> استيراد البيانات
+                        </button>
+                        <button class="btn btn-danger" id="clearAllData">
+                            <i class="fas fa-trash"></i> حذف جميع البيانات
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-modal="settingsModal">إغلاق</button>
+                <button type="button" class="btn btn-primary" id="saveSettings">
+                    <i class="fas fa-save"></i> حفظ الإعدادات
+                </button>
+            </div>
+        </div>
+    </div>
+<!-- الفوتر الاحترافي -->
+<footer class="site-footer">
+    <div class="footer-container">
+        <div class="footer-content">
+            <div class="footer-main-text">
+                <p>هذا المشروع هو ثمرة تعاون مشترك بين قسم BTEC لإدارة الأعمال وقسم BTEC لتكنولوجيا المعلومات في مدرسة عكرمة الثانوية للبنين، وقد جاءت فكرة المشروع بمبادرة مميزة من المعلم <strong>حسن العنزي</strong>، بينما قام بتصميم وتطوير هذا البرنامج الطالب <strong>عدي المشاقبة</strong>.</p>
+            </div>
+            
+            <div class="footer-info-grid">
+                <div class="footer-info-item">
+                    <i class="fas fa-user-tie"></i>
+                    <div class="footer-info-text">
+                        <span class="footer-label">المصمم والمطور:</span>
+                        <span class="footer-value">عدي المشاقبة</span>
+                    </div>
+                </div>
+                
+                <div class="footer-info-item">
+                    <i class="fas fa-school"></i>
+                    <div class="footer-info-text">
+                        <span class="footer-label">المدرسة:</span>
+                        <span class="footer-value">عكرمة الثانوية للبنين</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ════════════ بطاقة عدي الفاخرة ════════════ -->
+        <div class="oday-card-wrapper">
+            <div class="oday-label-wrap">
+                <div class="oday-label-line"></div>
+                <div class="oday-label-text">معلومات المطور</div>
+                <div class="oday-label-line oday-r"></div>
+            </div>
+
+            <div class="oday-scene">
+                <div class="oday-card" id="odayCard">
+                    
+                    <!-- الواجهة الأمامية (عربي) -->
+                    <div class="oday-face oday-face-front">
+                        <div class="oday-pattern"></div>
+                        <div class="oday-metal-sheen"></div>
+                        <div class="oday-orn oday-orn-tl"></div>
+                        <div class="oday-orn oday-orn-tr"></div>
+                        <div class="oday-orn oday-orn-bl"></div>
+                        <div class="oday-orn oday-orn-br"></div>
+                        <div class="oday-glow-edge"></div>
+                        <div class="oday-content">
+                            <div class="oday-accent-bar">
+                                <div class="oday-bar-line"></div>
+                                <div class="oday-bar-diamond"></div>
+                                <div class="oday-bar-line2"></div>
+                            </div>
+                            <div class="oday-name">عدي المشاقبة</div>
+                            <div class="oday-divider"></div>
+                            <div class="oday-links">
+                                <a class="oday-link" href="https://github.com/mashaqbehoday" target="_blank" rel="noopener">
+                                    <div class="oday-icon oday-icon-gh">
+                                        <svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.4 3-.405 1.02.005 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+                                    </div>
+                                    <div class="oday-link-body">
+                                        <span class="oday-link-label">GitHub</span>
+                                        <span class="oday-link-val">mashaqbehoday</span>
+                                    </div>
+                                    <span class="oday-ext">↗</span>
+                                </a>
+                                <a class="oday-link" href="https://www.linkedin.com/in/oday-mashaqbeh-603698407/" target="_blank" rel="noopener">
+                                    <div class="oday-icon oday-icon-li">
+                                        <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                                    </div>
+                                    <div class="oday-link-body">
+                                        <span class="oday-link-label">لينكد إن</span>
+                                        <span class="oday-link-val">Oday Mashaqbeh</span>
+                                    </div>
+                                    <span class="oday-ext">↗</span>
+                                </a>
+                                <a class="oday-link" href="mailto:mashaqbehoday6@gmail.com">
+                                    <div class="oday-icon oday-icon-gm">
+                                        <svg viewBox="0 0 24 24"><path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 010 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.91 1.528-1.145C21.69 2.28 24 3.434 24 5.457z"/></svg>
+                                    </div>
+                                    <div class="oday-link-body">
+                                        <span class="oday-link-label">البريد الإلكتروني</span>
+                                        <span class="oday-link-val">mashaqbehoday6@gmail.com</span>
+                                    </div>
+                                    <span class="oday-ext">↗</span>
+                                </a>
+
+                                <a class="oday-link" href="https://www.instagram.com/mashaqbehoday/" target="_blank" rel="noopener">
+    <div class="oday-icon oday-icon-ig">
+        <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+    </div>
+    <div class="oday-link-body">
+        <span class="oday-link-label">انستغرام</span>
+        <span class="oday-link-val">mashaqbehoday</span>
+    </div>
+    <span class="oday-ext">↗</span>
+</a>
+                            </div>
+                            <div class="oday-bottom-bar"><div class="oday-monogram">O · M</div></div>
+                        </div>
+                    </div>
+
+                    <!-- الواجهة الخلفية (إنجليزي) -->
+                    <div class="oday-face oday-face-back">
+                        <div class="oday-pattern"></div>
+                        <div class="oday-metal-sheen"></div>
+                        <div class="oday-orn oday-orn-tl"></div>
+                        <div class="oday-orn oday-orn-tr"></div>
+                        <div class="oday-orn oday-orn-bl"></div>
+                        <div class="oday-orn oday-orn-br"></div>
+                        <div class="oday-glow-edge"></div>
+                        <div class="oday-content">
+                            <div class="oday-accent-bar">
+                                <div class="oday-bar-line"></div>
+                                <div class="oday-bar-diamond"></div>
+                                <div class="oday-bar-line2"></div>
+                            </div>
+                            <div class="oday-name">Oday Mashaqbeh</div>
+                            <div class="oday-divider"></div>
+                            <div class="oday-links">
+                                <a class="oday-link" href="https://github.com/mashaqbehoday" target="_blank" rel="noopener">
+                                    <div class="oday-icon oday-icon-gh">
+                                        <svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.4 3-.405 1.02.005 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+                                    </div>
+                                    <div class="oday-link-body">
+                                        <span class="oday-link-label">GitHub</span>
+                                        <span class="oday-link-val">mashaqbehoday</span>
+                                    </div>
+                                    <span class="oday-ext">↗</span>
+                                </a>
+                                <a class="oday-link" href="https://www.linkedin.com/in/oday-mashaqbeh-603698407/" target="_blank" rel="noopener">
+                                    <div class="oday-icon oday-icon-li">
+                                        <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                                    </div>
+                                    <div class="oday-link-body">
+                                        <span class="oday-link-label">LinkedIn</span>
+                                        <span class="oday-link-val">Oday Mashaqbeh</span>
+                                    </div>
+                                    <span class="oday-ext">↗</span>
+                                </a>
+                                <a class="oday-link" href="mailto:mashaqbehoday6@gmail.com">
+                                    <div class="oday-icon oday-icon-gm">
+                                        <svg viewBox="0 0 24 24"><path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 010 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.91 1.528-1.145C21.69 2.28 24 3.434 24 5.457z"/></svg>
+                                    </div>
+                                    <div class="oday-link-body">
+                                        <span class="oday-link-label">Email</span>
+                                        <span class="oday-link-val">mashaqbehoday6@gmail.com</span>
+                                    </div>
+                                    <span class="oday-ext">↗</span>
+                                </a>
+
+                                <a class="oday-link" href="https://www.instagram.com/mashaqbehoday/" target="_blank" rel="noopener">
+    <div class="oday-icon oday-icon-ig">
+        <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+    </div>
+    <div class="oday-link-body">
+        <span class="oday-link-label">Instagram</span>
+        <span class="oday-link-val">mashaqbehoday</span>
+    </div>
+    <span class="oday-ext">↗</span>
+</a>
+                            </div>
+                            <div class="oday-bottom-bar"><div class="oday-monogram">O · M</div></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+        <!-- ════════════ نهاية البطاقة ════════════ -->
+        
+        <div class="footer-bottom">
+            <p>&copy; 2026 جميع الحقوق محفوظة</p>
+        </div>
+    </div>
+</footer>
+
+
+
+<!-- Modal إدارة الفئات -->
+<div class="modal" id="categoriesModal">
+    <div class="modal-overlay"></div>
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3><i class="fas fa-tags"></i> إدارة الفئات</h3>
+            <button class="modal-close" data-modal="categoriesModal">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label>إضافة فئة جديدة</label>
+                <div style="display: flex; gap: 0.5rem;">
+                    <input type="text" id="newCategoryName" placeholder="اسم الفئة (مثال: ملابس)">
+                    <input type="text" id="newCategoryIcon" placeholder="أيقونة (مثال: tshirt)" style="width: 150px;">
+                    <button class="btn btn-primary" id="addCategoryBtn">
+                        <i class="fas fa-plus"></i> إضافة
+                    </button>
+                </div>
+                <small style="color: var(--text-secondary); margin-top: 0.5rem; display: block;">
+                    <i class="fas fa-info-circle"></i> 
+                    الأيقونات من Font Awesome - ابحث عنها في: 
+                    <a href="https://fontawesome.com/icons" target="_blank" style="color: var(--primary);">fontawesome.com/icons</a>
+                </small>
+            </div>
+            
+            <div style="margin-top: 2rem;">
+                <h4 style="margin-bottom: 1rem; color: var(--primary);">الفئات الحالية:</h4>
+                <div id="categoriesListContainer"></div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-modal="categoriesModal">إغلاق</button>
+        </div>
+    </div>
+</div>
+
+    <!-- Toast للإشعارات -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- المكتبات -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.6/dist/JsBarcode.all.min.js"></script>
+    
+    <!-- مكتبة html5-qrcode الأفضل لمسح الباركود -->
+    <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+    
+    <!-- السكريبتات -->
+    <script src="js/app.js"></script>
+    <script src="js/barcode-scanner.js"></script>
+    <script src="js/pos-advanced.js"></script>
+    
+    <!-- Service Worker -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js')
+                .then(reg => console.log('Service Worker registered', reg))
+                .catch(err => console.log('Service Worker registration failed', err));
+        }
+    </script>
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    const menu = document.getElementById('navbarMenu');
+    const btnLeft = document.getElementById('scrollLeft');
+    const btnRight = document.getElementById('scrollRight');
+
+    if (btnLeft && btnRight && menu) {
+        // التمرير لليسار
+        btnLeft.onclick = () => {
+            menu.scrollBy({ left: -200, behavior: 'smooth' });
+        };
+        // التمرير لليمين
+        btnRight.onclick = () => {
+            menu.scrollBy({ left: 200, behavior: 'smooth' });
+        };
+
+        // إخفاء/إظهار الأزرار بناءً على وضع التمرير
+        const toggleButtons = () => {
+            const isScrollable = menu.scrollWidth > menu.clientWidth;
+            btnLeft.style.display = isScrollable ? 'flex' : 'none';
+            btnRight.style.display = isScrollable ? 'flex' : 'none';
+        };
+
+        window.addEventListener('resize', toggleButtons);
+        // تشغيل التحقق لأول مرة
+        setTimeout(toggleButtons, 1000); 
+    }
+});
+</script>
+</body>
+</html>
